@@ -1,3 +1,4 @@
+from optparse import Option
 from typing import List, Optional, Sequence, Union
 
 from asyncpg import Connection, Record
@@ -103,6 +104,7 @@ class ItemsRepository(BaseRepository):  # noqa: WPS214
     async def filter_items(  # noqa: WPS211
         self,
         *,
+        title: Optional[str] = None,
         tag: Optional[str] = None,
         seller: Optional[str] = None,
         favorited: Optional[str] = None,
@@ -136,6 +138,26 @@ class ItemsRepository(BaseRepository):  # noqa: WPS214
             ),
         )
         # fmt: on
+
+        if title:
+            query_params.append(title)
+            query_params_count += 1
+
+            # fmt: off
+            query = query.join(
+                title,
+            ).on(
+                (items.title == title.item_id) & (
+                    favorites.user_id == Query.from_(
+                        users,
+                    ).where(
+                        users.username == Parameter(query_params_count),
+                    ).select(
+                        users.id,
+                    )
+                ),
+            )
+            # fmt: on
 
         if tag:
             query_params.append(tag)
