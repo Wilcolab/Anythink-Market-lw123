@@ -9,7 +9,9 @@ import {
   HOME_PAGE_UNLOADED,
   APPLY_TAG_FILTER,
 } from "../../constants/actionTypes";
+
 import ItemList from "../ItemList";
+
 
 const Promise = global.Promise;
 
@@ -41,14 +43,13 @@ class Home extends React.Component {
     this.setState({searchResults: []});
   }
 
-  changeSearchInput = (e) =>{
-   
+  componentWillUnmount() {
+    this.props.onUnload();
+  }
 
-    console.log(  String(e.target.value).length );
+  changeSearchInput = (e) =>{
 
     if(String(e.target.value).length >= 3) {
-
-      console.log('Call API');
 
       fetch('http://localhost:3000/api/items?title='+String(e.target.value))
         .then((response) => response.json() )
@@ -63,43 +64,16 @@ class Home extends React.Component {
 
     }
 
-     
-
-    
-
-
-  }
-
-
-  componentWillUnmount() {
-    this.props.onUnload();
   }
 
   render() {
     return (
       <div className="home-page">
-        <Banner />
+        <Banner  changeSearchInput={this.changeSearchInput} />
 
-        <div className="container p-4 text-center">
-          <input type="text" id="search-box" onChange={this.changeSearchInput} ></input>
-
-            <br />
-
-            {/* {this.state.searchResults.map((item, index) => { 
-
-              const line = item.title + " " + item.description;
-
-              return line;
-
-              })} */}
-
-              <ItemList 
-                items={this.state.searchResults}
-              ></ItemList>
-
-        </div>
-
-        
+        <ItemList 
+           items={this.state.searchResults}
+        ></ItemList>
 
         <div className="container page">
           <Tags tags={this.props.tags} onClickTag={this.props.onClickTag} />
