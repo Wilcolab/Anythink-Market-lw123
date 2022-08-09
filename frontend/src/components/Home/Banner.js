@@ -1,9 +1,7 @@
 import React from "react";
 import logo from "../../imgs/logo.png";
 
-
-const Banner = ({changeSearchInput}) => {
-
+const Banner = ({ changeSearchInput }) => {
   return (
     <div className="banner text-white">
       <div className="container p-4 text-center">
@@ -13,8 +11,11 @@ const Banner = ({changeSearchInput}) => {
           <span> the cool stuff.</span>
         </div>
         <div className="container p-4 text-center">
-          <input type="text" id="search-box" onChange={changeSearchInput} ></input>
-
+          <input
+            type="text"
+            id="search-box"
+            onChange={changeSearchInput}
+          ></input>
         </div>
       </div>
     </div>

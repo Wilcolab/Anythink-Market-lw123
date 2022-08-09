@@ -12,7 +12,6 @@ import {
 
 import ItemList from "../ItemList";
 
-
 const Promise = global.Promise;
 
 const mapStateToProps = (state) => ({
@@ -40,40 +39,33 @@ class Home extends React.Component {
       Promise.all([agent.Tags.getAll(), itemsPromise()])
     );
 
-    this.setState({searchResults: []});
+    this.setState({ searchResults: [] });
   }
 
   componentWillUnmount() {
     this.props.onUnload();
   }
 
-  changeSearchInput = (e) =>{
-
-    if(String(e.target.value).length >= 3) {
-
-      fetch('http://localhost:3000/api/items?title='+String(e.target.value))
-        .then((response) => response.json() )
-        .then( (data) => {
+  changeSearchInput = (e) => {
+    if (String(e.target.value).length >= 3) {
+      fetch("http://localhost:3000/api/items?title=" + String(e.target.value))
+        .then((response) => response.json())
+        .then((data) => {
           console.log(data.items);
 
           const items = data.items;
 
-          this.setState({searchResults: items});
-
-        } )
-
+          this.setState({ searchResults: items });
+        });
     }
-
-  }
+  };
 
   render() {
     return (
       <div className="home-page">
-        <Banner  changeSearchInput={this.changeSearchInput} />
+        <Banner changeSearchInput={this.changeSearchInput} />
 
-        <ItemList 
-           items={this.state.searchResults}
-        ></ItemList>
+        <ItemList items={this.state.searchResults}></ItemList>
 
         <div className="container page">
           <Tags tags={this.props.tags} onClickTag={this.props.onClickTag} />
