@@ -11,6 +11,7 @@ import {
 } from "../../constants/actionTypes";
 
 import ItemList from "../ItemList";
+import ScoldingText from "./ScoldingText";
 
 const Promise = global.Promise;
 
@@ -40,6 +41,8 @@ class Home extends React.Component {
     );
 
     this.setState({ searchResults: [] });
+    this.setState({ searched: false });
+    this.setState({ searchstring: "" });
   }
 
   componentWillUnmount() {
@@ -47,6 +50,8 @@ class Home extends React.Component {
   }
 
   changeSearchInput = (e) => {
+    this.setState({ searchstring: String(e.target.value) });
+
     if (String(e.target.value).length >= 3) {
       fetch("http://localhost:3000/api/items?title=" + String(e.target.value))
         .then((response) => response.json())
@@ -56,6 +61,7 @@ class Home extends React.Component {
           const items = data.items;
 
           this.setState({ searchResults: items });
+          this.setState({ searched: true });
         });
     }
   };
@@ -64,6 +70,12 @@ class Home extends React.Component {
     return (
       <div className="home-page">
         <Banner changeSearchInput={this.changeSearchInput} />
+
+        <ScoldingText
+          searched={this.state.searched}
+          items={this.state.searchResults}
+          searchstring={this.state.searchstring}
+        ></ScoldingText>
 
         <ItemList items={this.state.searchResults}></ItemList>
 

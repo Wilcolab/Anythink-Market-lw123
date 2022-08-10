@@ -72,6 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
 const MainView = (props) => {
   return (
     <div>
+
       <div className="feed-toggle">
         <ul className="nav nav-tabs">
           <YourFeedTab
@@ -93,6 +94,7 @@ const MainView = (props) => {
         itemsCount={props.itemsCount}
         currentPage={props.currentPage}
       />
+
     </div>
   );
 };
