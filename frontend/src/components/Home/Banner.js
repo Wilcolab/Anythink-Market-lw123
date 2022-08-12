@@ -7,8 +7,10 @@ const Banner = ({ changeSearchInput, showSearchInput, onGetMouser }) => {
       <div className="container p-4 text-center">
         <img src={logo} alt="banner" />
         <div>
-          <span id="get-part">A place to</span>{" "}
-          <span onClick={onGetMouser}>get</span>
+          <span id="get-part1">A place to</span>{" "}
+          <span id="get-part" onClick={onGetMouser}>
+            get
+          </span>
           <span> the cool stuff.</span>
         </div>
         <div className="container p-4 text-center">
