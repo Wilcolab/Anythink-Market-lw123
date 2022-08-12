@@ -43,6 +43,7 @@ class Home extends React.Component {
     this.setState({ searchResults: [] });
     this.setState({ searched: false });
     this.setState({ searchstring: "" });
+    this.setState({ showsearchinput: false });
   }
 
   componentWillUnmount() {
@@ -66,10 +67,19 @@ class Home extends React.Component {
     }
   };
 
+  onGetMouseover = () => {
+    this.setState({ showsearchinput: true });
+    console.log("mouseover triggered");
+  };
+
   render() {
     return (
       <div className="home-page">
-        <Banner changeSearchInput={this.changeSearchInput} />
+        <Banner
+          changeSearchInput={this.changeSearchInput}
+          showSearchInput={this.state.showsearchinput}
+          onGetMouser={this.onGetMouseover}
+        />
 
         <ScoldingText
           searched={this.state.searched}
