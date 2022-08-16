@@ -63,6 +63,7 @@ const createComment = async (client, item, body) => {
     return commentRes.data?.comment;
   } catch (e) {
     // fehler
+    console.log(e);
   }
 };
 
