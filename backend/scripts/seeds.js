@@ -1,10 +1,10 @@
 //TODO: seeds script should come here, so we'll be able to put some data in our local env
 
-// 100 users, 100 products, and 100 comments  
+// 100 users, 100 products, and 100 comments
 
-const axios = require("axios"); 
+const axios = require("axios");
 
-const NUMBER_SEED_DATA = 100;
+const NUMBER_SEED_DATA = 10;
 
 const TEN_SECONDS = 10 * 1000;
 
@@ -41,6 +41,7 @@ const createUser = async (client, number) => {
     }
   } catch (e) {
     //User doesn't exists yet
+    const err = e;
   }
 
   const userRes = await client.post(`/api/users`, user);
@@ -60,35 +61,34 @@ const createComment = async (client, item, body) => {
       comment,
       item
     );
+
     return commentRes.data?.comment;
   } catch (e) {
     // fehler
-    console.log(e);
   }
 };
 
 const main = async () => {
+  let item = "";
+
   for (let i = 1; i <= NUMBER_SEED_DATA; i++) {
     // users
 
     const token = await createUser(client, i);
 
     client.defaults.headers.common["Authorization"] = `Token ${token}`;
+  }
 
-    // console.log(token);
-
+  for (let i = 1; i <= NUMBER_SEED_DATA; i++) {
     // items
 
-    const item = await createItem(client, "SeedItem" + i);
-
-    //console.log(item.slug);
-
-    // comments
-
-    const comment = await createComment(client, item, "Test Comment " + i);
-
-    //console.log(comment);
+    item = await createItem(client, "SeedItem" + i);
   }
+
+  for (let i = 1; i <= NUMBER_SEED_DATA; i++) {
+    const comment = await createComment(client, item, "Test Comment " + i);
+  }
+
   console.log("... done");
 };
 
