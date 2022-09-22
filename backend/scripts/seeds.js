@@ -1,8 +1,8 @@
 //TODO: seeds script should come here, so we'll be able to put some data in our local env
 
-// 100 users, 100 products, and 100 comments
+// 100 users, 100 products, and 100 comments  
 
-const axios = require("axios");
+const axios = require("axios"); 
 
 const NUMBER_SEED_DATA = 100;
 
